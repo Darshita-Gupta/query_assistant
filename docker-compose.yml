@@ -1,0 +1,24 @@
+services:
+  query-assistant:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: student_query_assistant
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    volumes:
+      # Persist user credentials, chat logs, and app diagnostics across restarts
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s

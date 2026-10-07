@@ -8,5 +8,10 @@
     "password_hash": "48036ae3bf210da667d91de64d8317fe73e279f0c3d5dfadc17928b5988b6dbf",
     "salt": "416b98c5056f8b2428e0e0687f1e7ef8",
     "created_at": "2026-06-03 17:41:07"
+  },
+  "s1": {
+    "password_hash": "d04e3356cc237826193a6bf129f3cb9158b78cd774ad83ca0bbfe3ec4ddba630",
+    "salt": "054cdb729bb93e55e533d07c1a09801f",
+    "created_at": "2026-10-08 00:37:35"
   }
 }

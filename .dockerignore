@@ -1,0 +1,31 @@
+# Version control
+.git
+.gitignore
+
+# Virtual environment
+.venv
+venv/
+ENV/
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Local configuration & environment variables
+.env
+
+# IDE & Editor settings
+.vscode/
+.idea/
+*.swp
+
+# Diagnostic logs
+logs/
+*.log
+
+# Documentation / Scratch
+*.md
+!README.md

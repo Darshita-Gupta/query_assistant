@@ -114,12 +114,74 @@ student-query-assistant/
 
 ## 🏃 Running Instructions
 
-To launch the Streamlit application:
+### Option A: Local Python Setup
+To launch the Streamlit application directly with Python:
 ```powershell
 streamlit run app.py
 ```
 The server will spin up and automatically open a browser window pointing to `http://localhost:8501`.
 
+---
+
+## 🐳 Docker & Virtual Machine Deployment
+
+You can containerize and run this application on any machine (Local PC, AWS EC2, Google Cloud, DigitalOcean, or Azure VM) using Docker.
+
+### 1. Prerequisites for Virtual Machine (Ubuntu/Debian)
+If setting up a fresh Cloud VM, install Docker and Docker Compose:
+```bash
+# Update package index and install Docker
+sudo apt-get update
+sudo apt-get install -y docker.io docker-compose-v2
+
+# Start Docker service and enable on boot
+sudo systemctl enable --now docker
+
+# Add your user to the docker group (optional, avoids requiring 'sudo' for docker commands)
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+### 2. Configure Environment Variables
+Create a `.env` file in the project root on your VM:
+```bash
+cp .env.example .env
+nano .env
+```
+Add your Gemini API Key:
+```env
+GEMINI_API_KEY=your_actual_gemini_api_key_here
+```
+
+### 3. Deploying with Docker Compose (Recommended)
+
+To build the image and start the container in detached mode:
+```bash
+docker compose up -d --build
+```
+- **Access App**: Open `http://<your-vm-ip>:8501` in your browser.
+- **View Logs**: `docker compose logs -f`
+- **Stop Container**: `docker compose down`
+
+### 4. Deploying with Docker CLI directly
+Alternatively, build and run using standard Docker commands:
+```bash
+# Build Docker image
+docker build -t query-assistant .
+
+# Run container with environment file and volume persistence
+docker run -d \
+  --name query-assistant-app \
+  -p 8501:8501 \
+  --env-file .env \
+  -v $(pwd)/data:/app/data \
+  -v $(pwd)/logs:/app/logs \
+  --restart unless-stopped \
+  query-assistant
+```
+
+### 💡 Cloud VM Firewall Note
+If deploying to AWS EC2, GCP, or Azure, ensure port **`8501`** is allowed in your VM's Security Group / Firewall settings for inbound TCP traffic.
 
 ---
 
